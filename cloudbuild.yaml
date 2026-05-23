@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build image from dockerfile'
+    args:
+      - build
+      - -t
+      - test-image
+      - .
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push image'
+    args:
+      - push
+      - test-image
+
+  - name: 'test-image'
+    id: 'Run test cases'
+    entrypoint: pytest
+    args:
+      - test_app.py
