@@ -1,0 +1,19 @@
+image: google/cloud-sdk:latest
+pipelines:
+  default:
+  - step:
+      name: Build Docker Image
+      script:
+      - docker build -t test-image .
+      services:
+      - docker
+  - step:
+      name: Push Docker Image
+      script:
+      - docker push test-image
+      services:
+      - docker
+  - step:
+      name: Run Tests
+      script:
+      - pytest test_app.py
